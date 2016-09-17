@@ -66,7 +66,9 @@ RUN log () { echo -e "\033[01;95m$@\033[0m"; } && \
 
 # Adjust the default kafka-rest properties to connect to Zookeeper at zookeeper:2181
 ENV ZOOKEEPER_HOST=zookeeper \
-    ZOOKEEPER_PORT=2181
+    ZOOKEEPER_PORT=2181 \
+    KAFKA_HOST=kafka \
+    KAFKA_PORT=9092
 RUN sed -i "s/#zookeeper.connect=.*/zookeeper.connect=$ZOOKEEPER_HOST:$ZOOKEEPER_PORT/g" $KAFKA_REST_HOME/etc/kafka-rest/kafka-rest.properties
 
 # Add wait-for-it script, for use in waiting for Zookeeper
