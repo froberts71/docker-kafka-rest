@@ -76,7 +76,7 @@ ADD https://raw.githubusercontent.com/ucalgary/wait-for-it/master/wait-for-it.sh
 RUN chmod 755 /usr/local/bin/wait-for-it
 
 # Copy custom schema-registry-start script
-COPY bin/kafka-rest-docker-start $SCHEMA_REGISTRY_HOME/bin/kafka-rest-docker-start
+COPY bin/kafka-rest-docker-start $KAFKA_REST_HOME/bin/kafka-rest-docker-start
 
 WORKDIR $KAFKA_REST_HOME
 
