@@ -75,10 +75,13 @@ RUN sed -i "s/#zookeeper.connect=.*/zookeeper.connect=$ZOOKEEPER_HOST:$ZOOKEEPER
 ADD https://raw.githubusercontent.com/ucalgary/wait-for-it/master/wait-for-it.sh /usr/local/bin/wait-for-it
 RUN chmod 755 /usr/local/bin/wait-for-it
 
+# Copy custom schema-registry-start script
+COPY bin/kafka-rest-docker-start $SCHEMA_REGISTRY_HOME/bin/kafka-rest-docker-start
+
 WORKDIR $KAFKA_REST_HOME
 
 ENV PATH=$PATH:$KAFKA_REST_HOME/bin
 
 EXPOSE 8081
 
-CMD wait-for-it -h $ZOOKEEPER_HOST -p $ZOOKEEPER_PORT -s -t 30 -- kafka-rest-start /kafka-rest/etc/kafka-rest/kafka-rest.properties
+CMD ["kafka-rest-docker-start", "/kafka-rest/etc/kafka-rest/kafka-rest.properties"]
