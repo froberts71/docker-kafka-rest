@@ -7,8 +7,7 @@ ENV MAVEN_MAJOR=3 \
     KAFKA_REST_VERSION=3.0.1 \
 		KAFKA_REST_HOME=/kafka-rest \
     REST_UTILS_VERSION=3.0.1 \
-    COMMON_VERSION=3.1.0 \
-    BUILD_DIR=/tmp/build
+    COMMON_VERSION=3.1.0
 
 ARG MAVEN_OPTIONS="-DskipTests"
 
@@ -28,8 +27,7 @@ RUN log () { echo -e "\033[01;95m$@\033[0m"; } && \
 		openjdk8="$JAVA_ALPINE_VERSION" \
 		rsync && \
 
-	# BUILD_DIR="$(mktemp -d)" && \
-	mkdir -p $BUILD_DIR && \
+	BUILD_DIR="$(mktemp -d)" && \
 
 	log "Download and unpack Apache Maven" && \
 	wget -O $BUILD_DIR/apache-maven-bin.tar.gz "https://www.apache.org/dist/maven/maven-$MAVEN_MAJOR/$MAVEN_VERSION/binaries/apache-maven-$MAVEN_VERSION-bin.tar.gz" && \
