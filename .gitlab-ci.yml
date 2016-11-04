@@ -20,6 +20,8 @@ build:
 
 release:
   stage: release
+  variables:
+    GIT_STRATEGY: none
   script:
     - docker pull $CI_REGISTRY_IMAGE:$CI_BUILD_REF_NAME
     - docker tag $CI_REGISTRY_IMAGE:$CI_BUILD_REF_NAME $CI_REGISTRY_IMAGE:$KAFKA_REST_VERSION_MAJOR.$KAFKA_REST_VERSION_MINOR.$KAFKA_REST_VERSION_PATCH
