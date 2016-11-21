@@ -50,13 +50,13 @@ RUN log () { echo -e "\033[01;95m$@\033[0m"; } && \
 	log "Download, unpack, and build confluentinc/common" && \
 	wget -O $BUILD_DIR/common.tar.gz "https://github.com/confluentinc/common/archive/v$COMMON_VERSION.tar.gz" && \
 	tar -xzf $BUILD_DIR/common.tar.gz --directory=$BUILD_DIR && \
-	cd $BUILD_DIR/common-common-$COMMON_VERSION && \
-	$BUILD_DIR/apache-maven-$MAVEN_VERSION/bin/mvn $MAVEN_OPTIONS --file=$BUILD_DIR/common-common-$COMMON_VERSION/pom.xml package && \
+	cd $BUILD_DIR/common-$COMMON_VERSION && \
+	$BUILD_DIR/apache-maven-$MAVEN_VERSION/bin/mvn $MAVEN_OPTIONS --file=$BUILD_DIR/common-$COMMON_VERSION/pom.xml package && \
 
 	log "Install the build packages" && \
 	cp -r $BUILD_DIR/kafka-rest-$KAFKA_REST_VERSION/target/kafka-rest-$KAFKA_REST_VERSION-package $KAFKA_REST_HOME && \
 	rsync -a $BUILD_DIR/rest-utils-$REST_UTILS_VERSION/package/target/rest-utils-package-$REST_UTILS_VERSION-package/ $KAFKA_REST_HOME && \
-	rsync -a $BUILD_DIR/common-common-$COMMON_VERSION/package/target/common-package-$COMMON_VERSION-package/ $KAFKA_REST_HOME && \
+	rsync -a $BUILD_DIR/common-$COMMON_VERSION/package/target/common-package-$COMMON_VERSION-package/ $KAFKA_REST_HOME && \
 
 	log "Clean up" && \
 	rm -r "$BUILD_DIR" && \
