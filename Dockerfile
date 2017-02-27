@@ -61,11 +61,14 @@ RUN log () { echo -e "\033[01;95m$@\033[0m"; } && \
 	apk del .fetch-deps .build-deps
 
 # Adjust the default kafka-rest properties to connect to Zookeeper at zookeeper:2181
+# and Schema Registry at http://schema-registry:8081
 ENV ZOOKEEPER_HOST=zookeeper \
     ZOOKEEPER_PORT=2181 \
     KAFKA_HOST=kafka \
-    KAFKA_PORT=9092
-RUN sed -i "s/#zookeeper.connect=.*/zookeeper.connect=$ZOOKEEPER_HOST:$ZOOKEEPER_PORT/g" $KAFKA_REST_HOME/etc/kafka-rest/kafka-rest.properties
+    KAFKA_PORT=9092 \
+    SCHEMA_REGISTRY_URL=http://schema-registry:8081
+RUN sed -i "s/#zookeeper.connect=.*/zookeeper.connect=$ZOOKEEPER_HOST:$ZOOKEEPER_PORT/g" $KAFKA_REST_HOME/etc/kafka-rest/kafka-rest.properties && \
+    sed -i "s/#schema.registry.url=.*/schema.registry.url=$SCHEMA_REGISTRY_URL/g" $KAFKA_REST_HOME/etc/kafka-rest/kafka-rest.properties
 
 # Add wait-for-it script, for use in waiting for Zookeeper
 ADD https://raw.githubusercontent.com/ucalgary/wait-for-it/master/wait-for-it.sh /usr/local/bin/wait-for-it
