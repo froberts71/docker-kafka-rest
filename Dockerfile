@@ -68,7 +68,7 @@ ENV ZOOKEEPER_HOST=zookeeper \
     KAFKA_PORT=9092 \
     SCHEMA_REGISTRY_URL=http://schema-registry:8081
 RUN sed -i "s/#zookeeper.connect=.*/zookeeper.connect=$ZOOKEEPER_HOST:$ZOOKEEPER_PORT/g" $KAFKA_REST_HOME/etc/kafka-rest/kafka-rest.properties && \
-    sed -i "s/#schema.registry.url=.*/schema.registry.url=$SCHEMA_REGISTRY_URL/g" $KAFKA_REST_HOME/etc/kafka-rest/kafka-rest.properties
+    sed -i "s|#schema.registry.url=.*|schema.registry.url=$SCHEMA_REGISTRY_URL|g" $KAFKA_REST_HOME/etc/kafka-rest/kafka-rest.properties
 
 # Add wait-for-it script, for use in waiting for Zookeeper
 ADD https://raw.githubusercontent.com/ucalgary/wait-for-it/master/wait-for-it.sh /usr/local/bin/wait-for-it
